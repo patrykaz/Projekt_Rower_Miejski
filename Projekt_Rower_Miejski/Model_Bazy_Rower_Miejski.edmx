@@ -1,0 +1,512 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Baza_Rower_MiejskiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Funkcje_Pracownikow">
+          <Key>
+            <PropertyRef Name="ID_funkcji" />
+          </Key>
+          <Property Name="ID_funkcji" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nazwa_funkcji" Type="varchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Klienci">
+          <Key>
+            <PropertyRef Name="ID_klienta" />
+          </Key>
+          <Property Name="ID_klienta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Imie" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="Nazwisko" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="Plec" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="Telefon" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Pracownicy">
+          <Key>
+            <PropertyRef Name="ID_pracownika" />
+          </Key>
+          <Property Name="ID_pracownika" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Imie" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="Nazwisko" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="Pesel" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="Data_zatrudnienia" Type="smalldatetime" />
+          <Property Name="ID_funkcji_FK" Type="int" />
+        </EntityType>
+        <EntityType Name="Rowery">
+          <Key>
+            <PropertyRef Name="ID_roweru" />
+          </Key>
+          <Property Name="ID_roweru" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nr_ramy" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="Data_wprowadzenia_roweru_do_uzytku" Type="smalldatetime" />
+          <Property Name="ID_stanu_FK" Type="int" />
+        </EntityType>
+        <EntityType Name="Serwis_roweru">
+          <Key>
+            <PropertyRef Name="ID_serwisu" />
+          </Key>
+          <Property Name="ID_serwisu" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_roweru_FK" Type="int" />
+          <Property Name="ID_pracownika_FK" Type="int" />
+          <Property Name="Opis_usterki" Type="varchar" MaxLength="400" Nullable="false" />
+          <Property Name="Kwota_naprawy" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="Data_naprawy" Type="smalldatetime" />
+        </EntityType>
+        <EntityType Name="Stan_roweru">
+          <Key>
+            <PropertyRef Name="ID_stanu" />
+          </Key>
+          <Property Name="ID_stanu" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nazwa_stanu" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Wypozyczenia">
+          <Key>
+            <PropertyRef Name="ID_wypozyczenia" />
+          </Key>
+          <Property Name="ID_wypozyczenia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_roweru_FK" Type="int" />
+          <Property Name="ID_klienta_FK" Type="int" />
+          <Property Name="ID_pracownika_FK" Type="int" />
+          <Property Name="Data_czas_wypozyczenia" Type="smalldatetime" />
+          <Property Name="Data_czas_oddania" Type="smalldatetime" />
+          <Property Name="Czas_wypozyczenia" Type="time" Precision="0" />
+          <Property Name="Cena_wypozyczenia_za_godzine" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Pracownic__ID_fu__7755B73D">
+          <End Role="Funkcje_Pracownikow" Type="Self.Funkcje_Pracownikow" Multiplicity="0..1" />
+          <End Role="Pracownicy" Type="Self.Pracownicy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Funkcje_Pracownikow">
+              <PropertyRef Name="ID_funkcji" />
+            </Principal>
+            <Dependent Role="Pracownicy">
+              <PropertyRef Name="ID_funkcji_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Rowery__ID_stanu__70A8B9AE">
+          <End Role="Stan_roweru" Type="Self.Stan_roweru" Multiplicity="0..1" />
+          <End Role="Rowery" Type="Self.Rowery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stan_roweru">
+              <PropertyRef Name="ID_stanu" />
+            </Principal>
+            <Dependent Role="Rowery">
+              <PropertyRef Name="ID_stanu_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Serwis_ro__ID_pr__7EF6D905">
+          <End Role="Pracownicy" Type="Self.Pracownicy" Multiplicity="0..1" />
+          <End Role="Serwis_roweru" Type="Self.Serwis_roweru" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pracownicy">
+              <PropertyRef Name="ID_pracownika" />
+            </Principal>
+            <Dependent Role="Serwis_roweru">
+              <PropertyRef Name="ID_pracownika_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Serwis_ro__ID_ro__7E02B4CC">
+          <End Role="Rowery" Type="Self.Rowery" Multiplicity="0..1" />
+          <End Role="Serwis_roweru" Type="Self.Serwis_roweru" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rowery">
+              <PropertyRef Name="ID_roweru" />
+            </Principal>
+            <Dependent Role="Serwis_roweru">
+              <PropertyRef Name="ID_roweru_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Wypozycze__ID_kl__03BB8E22">
+          <End Role="Klienci" Type="Self.Klienci" Multiplicity="0..1" />
+          <End Role="Wypozyczenia" Type="Self.Wypozyczenia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Klienci">
+              <PropertyRef Name="ID_klienta" />
+            </Principal>
+            <Dependent Role="Wypozyczenia">
+              <PropertyRef Name="ID_klienta_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Wypozycze__ID_pr__04AFB25B">
+          <End Role="Pracownicy" Type="Self.Pracownicy" Multiplicity="0..1" />
+          <End Role="Wypozyczenia" Type="Self.Wypozyczenia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pracownicy">
+              <PropertyRef Name="ID_pracownika" />
+            </Principal>
+            <Dependent Role="Wypozyczenia">
+              <PropertyRef Name="ID_pracownika_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Wypozycze__ID_ro__02C769E9">
+          <End Role="Rowery" Type="Self.Rowery" Multiplicity="0..1" />
+          <End Role="Wypozyczenia" Type="Self.Wypozyczenia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rowery">
+              <PropertyRef Name="ID_roweru" />
+            </Principal>
+            <Dependent Role="Wypozyczenia">
+              <PropertyRef Name="ID_roweru_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Baza_Rower_MiejskiModelStoreContainer">
+          <EntitySet Name="Funkcje_Pracownikow" EntityType="Self.Funkcje_Pracownikow" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Klienci" EntityType="Self.Klienci" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pracownicy" EntityType="Self.Pracownicy" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rowery" EntityType="Self.Rowery" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Serwis_roweru" EntityType="Self.Serwis_roweru" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stan_roweru" EntityType="Self.Stan_roweru" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Wypozyczenia" EntityType="Self.Wypozyczenia" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Pracownic__ID_fu__7755B73D" Association="Self.FK__Pracownic__ID_fu__7755B73D">
+            <End Role="Funkcje_Pracownikow" EntitySet="Funkcje_Pracownikow" />
+            <End Role="Pracownicy" EntitySet="Pracownicy" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Rowery__ID_stanu__70A8B9AE" Association="Self.FK__Rowery__ID_stanu__70A8B9AE">
+            <End Role="Stan_roweru" EntitySet="Stan_roweru" />
+            <End Role="Rowery" EntitySet="Rowery" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Serwis_ro__ID_pr__7EF6D905" Association="Self.FK__Serwis_ro__ID_pr__7EF6D905">
+            <End Role="Pracownicy" EntitySet="Pracownicy" />
+            <End Role="Serwis_roweru" EntitySet="Serwis_roweru" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Serwis_ro__ID_ro__7E02B4CC" Association="Self.FK__Serwis_ro__ID_ro__7E02B4CC">
+            <End Role="Rowery" EntitySet="Rowery" />
+            <End Role="Serwis_roweru" EntitySet="Serwis_roweru" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Wypozycze__ID_kl__03BB8E22" Association="Self.FK__Wypozycze__ID_kl__03BB8E22">
+            <End Role="Klienci" EntitySet="Klienci" />
+            <End Role="Wypozyczenia" EntitySet="Wypozyczenia" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Wypozycze__ID_pr__04AFB25B" Association="Self.FK__Wypozycze__ID_pr__04AFB25B">
+            <End Role="Pracownicy" EntitySet="Pracownicy" />
+            <End Role="Wypozyczenia" EntitySet="Wypozyczenia" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Wypozycze__ID_ro__02C769E9" Association="Self.FK__Wypozycze__ID_ro__02C769E9">
+            <End Role="Rowery" EntitySet="Rowery" />
+            <End Role="Wypozyczenia" EntitySet="Wypozyczenia" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Baza_Rower_MiejskiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Funkcje_Pracownikow">
+          <Key>
+            <PropertyRef Name="ID_funkcji" />
+          </Key>
+          <Property Name="ID_funkcji" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nazwa_funkcji" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Pracownicy" Relationship="Self.FK__Pracownic__ID_fu__7755B73D" FromRole="Funkcje_Pracownikow" ToRole="Pracownicy" />
+        </EntityType>
+        <EntityType Name="Klienci">
+          <Key>
+            <PropertyRef Name="ID_klienta" />
+          </Key>
+          <Property Name="ID_klienta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Imie" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nazwisko" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Plec" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Telefon" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Wypozyczenia" Relationship="Self.FK__Wypozycze__ID_kl__03BB8E22" FromRole="Klienci" ToRole="Wypozyczenia" />
+        </EntityType>
+        <EntityType Name="Pracownicy">
+          <Key>
+            <PropertyRef Name="ID_pracownika" />
+          </Key>
+          <Property Name="ID_pracownika" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Imie" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nazwisko" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Pesel" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Data_zatrudnienia" Type="DateTime" Precision="0" />
+          <Property Name="ID_funkcji_FK" Type="Int32" />
+          <NavigationProperty Name="Funkcje_Pracownikow" Relationship="Self.FK__Pracownic__ID_fu__7755B73D" FromRole="Pracownicy" ToRole="Funkcje_Pracownikow" />
+          <NavigationProperty Name="Serwis_roweru" Relationship="Self.FK__Serwis_ro__ID_pr__7EF6D905" FromRole="Pracownicy" ToRole="Serwis_roweru" />
+          <NavigationProperty Name="Wypozyczenia" Relationship="Self.FK__Wypozycze__ID_pr__04AFB25B" FromRole="Pracownicy" ToRole="Wypozyczenia" />
+        </EntityType>
+        <EntityType Name="Rowery">
+          <Key>
+            <PropertyRef Name="ID_roweru" />
+          </Key>
+          <Property Name="ID_roweru" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nr_ramy" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Data_wprowadzenia_roweru_do_uzytku" Type="DateTime" Precision="0" />
+          <Property Name="ID_stanu_FK" Type="Int32" />
+          <NavigationProperty Name="Stan_roweru" Relationship="Self.FK__Rowery__ID_stanu__70A8B9AE" FromRole="Rowery" ToRole="Stan_roweru" />
+          <NavigationProperty Name="Serwis_roweru" Relationship="Self.FK__Serwis_ro__ID_ro__7E02B4CC" FromRole="Rowery" ToRole="Serwis_roweru" />
+          <NavigationProperty Name="Wypozyczenia" Relationship="Self.FK__Wypozycze__ID_ro__02C769E9" FromRole="Rowery" ToRole="Wypozyczenia" />
+        </EntityType>
+        <EntityType Name="Serwis_roweru">
+          <Key>
+            <PropertyRef Name="ID_serwisu" />
+          </Key>
+          <Property Name="ID_serwisu" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_roweru_FK" Type="Int32" />
+          <Property Name="ID_pracownika_FK" Type="Int32" />
+          <Property Name="Opis_usterki" Type="String" MaxLength="400" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Kwota_naprawy" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="Data_naprawy" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Pracownicy" Relationship="Self.FK__Serwis_ro__ID_pr__7EF6D905" FromRole="Serwis_roweru" ToRole="Pracownicy" />
+          <NavigationProperty Name="Rowery" Relationship="Self.FK__Serwis_ro__ID_ro__7E02B4CC" FromRole="Serwis_roweru" ToRole="Rowery" />
+        </EntityType>
+        <EntityType Name="Stan_roweru">
+          <Key>
+            <PropertyRef Name="ID_stanu" />
+          </Key>
+          <Property Name="ID_stanu" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nazwa_stanu" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Rowery" Relationship="Self.FK__Rowery__ID_stanu__70A8B9AE" FromRole="Stan_roweru" ToRole="Rowery" />
+        </EntityType>
+        <EntityType Name="Wypozyczenia">
+          <Key>
+            <PropertyRef Name="ID_wypozyczenia" />
+          </Key>
+          <Property Name="ID_wypozyczenia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_roweru_FK" Type="Int32" />
+          <Property Name="ID_klienta_FK" Type="Int32" />
+          <Property Name="ID_pracownika_FK" Type="Int32" />
+          <Property Name="Data_czas_wypozyczenia" Type="DateTime" Precision="0" />
+          <Property Name="Data_czas_oddania" Type="DateTime" Precision="0" />
+          <Property Name="Czas_wypozyczenia" Type="Time" Precision="0" />
+          <Property Name="Cena_wypozyczenia_za_godzine" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Klienci" Relationship="Self.FK__Wypozycze__ID_kl__03BB8E22" FromRole="Wypozyczenia" ToRole="Klienci" />
+          <NavigationProperty Name="Pracownicy" Relationship="Self.FK__Wypozycze__ID_pr__04AFB25B" FromRole="Wypozyczenia" ToRole="Pracownicy" />
+          <NavigationProperty Name="Rowery" Relationship="Self.FK__Wypozycze__ID_ro__02C769E9" FromRole="Wypozyczenia" ToRole="Rowery" />
+        </EntityType>
+        <Association Name="FK__Pracownic__ID_fu__7755B73D">
+          <End Role="Funkcje_Pracownikow" Type="Self.Funkcje_Pracownikow" Multiplicity="0..1" />
+          <End Role="Pracownicy" Type="Self.Pracownicy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Funkcje_Pracownikow">
+              <PropertyRef Name="ID_funkcji" />
+            </Principal>
+            <Dependent Role="Pracownicy">
+              <PropertyRef Name="ID_funkcji_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Wypozycze__ID_kl__03BB8E22">
+          <End Role="Klienci" Type="Self.Klienci" Multiplicity="0..1" />
+          <End Role="Wypozyczenia" Type="Self.Wypozyczenia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Klienci">
+              <PropertyRef Name="ID_klienta" />
+            </Principal>
+            <Dependent Role="Wypozyczenia">
+              <PropertyRef Name="ID_klienta_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Serwis_ro__ID_pr__7EF6D905">
+          <End Role="Pracownicy" Type="Self.Pracownicy" Multiplicity="0..1" />
+          <End Role="Serwis_roweru" Type="Self.Serwis_roweru" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pracownicy">
+              <PropertyRef Name="ID_pracownika" />
+            </Principal>
+            <Dependent Role="Serwis_roweru">
+              <PropertyRef Name="ID_pracownika_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Wypozycze__ID_pr__04AFB25B">
+          <End Role="Pracownicy" Type="Self.Pracownicy" Multiplicity="0..1" />
+          <End Role="Wypozyczenia" Type="Self.Wypozyczenia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pracownicy">
+              <PropertyRef Name="ID_pracownika" />
+            </Principal>
+            <Dependent Role="Wypozyczenia">
+              <PropertyRef Name="ID_pracownika_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Rowery__ID_stanu__70A8B9AE">
+          <End Role="Stan_roweru" Type="Self.Stan_roweru" Multiplicity="0..1" />
+          <End Role="Rowery" Type="Self.Rowery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stan_roweru">
+              <PropertyRef Name="ID_stanu" />
+            </Principal>
+            <Dependent Role="Rowery">
+              <PropertyRef Name="ID_stanu_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Serwis_ro__ID_ro__7E02B4CC">
+          <End Role="Rowery" Type="Self.Rowery" Multiplicity="0..1" />
+          <End Role="Serwis_roweru" Type="Self.Serwis_roweru" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rowery">
+              <PropertyRef Name="ID_roweru" />
+            </Principal>
+            <Dependent Role="Serwis_roweru">
+              <PropertyRef Name="ID_roweru_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Wypozycze__ID_ro__02C769E9">
+          <End Role="Rowery" Type="Self.Rowery" Multiplicity="0..1" />
+          <End Role="Wypozyczenia" Type="Self.Wypozyczenia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rowery">
+              <PropertyRef Name="ID_roweru" />
+            </Principal>
+            <Dependent Role="Wypozyczenia">
+              <PropertyRef Name="ID_roweru_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Baza_Rower_MiejskiEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Funkcje_Pracownikow" EntityType="Self.Funkcje_Pracownikow" />
+          <EntitySet Name="Klienci" EntityType="Self.Klienci" />
+          <EntitySet Name="Pracownicy" EntityType="Self.Pracownicy" />
+          <EntitySet Name="Rowery" EntityType="Self.Rowery" />
+          <EntitySet Name="Serwis_roweru" EntityType="Self.Serwis_roweru" />
+          <EntitySet Name="Stan_roweru" EntityType="Self.Stan_roweru" />
+          <EntitySet Name="Wypozyczenia" EntityType="Self.Wypozyczenia" />
+          <AssociationSet Name="FK__Pracownic__ID_fu__7755B73D" Association="Self.FK__Pracownic__ID_fu__7755B73D">
+            <End Role="Funkcje_Pracownikow" EntitySet="Funkcje_Pracownikow" />
+            <End Role="Pracownicy" EntitySet="Pracownicy" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Wypozycze__ID_kl__03BB8E22" Association="Self.FK__Wypozycze__ID_kl__03BB8E22">
+            <End Role="Klienci" EntitySet="Klienci" />
+            <End Role="Wypozyczenia" EntitySet="Wypozyczenia" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Serwis_ro__ID_pr__7EF6D905" Association="Self.FK__Serwis_ro__ID_pr__7EF6D905">
+            <End Role="Pracownicy" EntitySet="Pracownicy" />
+            <End Role="Serwis_roweru" EntitySet="Serwis_roweru" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Wypozycze__ID_pr__04AFB25B" Association="Self.FK__Wypozycze__ID_pr__04AFB25B">
+            <End Role="Pracownicy" EntitySet="Pracownicy" />
+            <End Role="Wypozyczenia" EntitySet="Wypozyczenia" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Rowery__ID_stanu__70A8B9AE" Association="Self.FK__Rowery__ID_stanu__70A8B9AE">
+            <End Role="Stan_roweru" EntitySet="Stan_roweru" />
+            <End Role="Rowery" EntitySet="Rowery" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Serwis_ro__ID_ro__7E02B4CC" Association="Self.FK__Serwis_ro__ID_ro__7E02B4CC">
+            <End Role="Rowery" EntitySet="Rowery" />
+            <End Role="Serwis_roweru" EntitySet="Serwis_roweru" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Wypozycze__ID_ro__02C769E9" Association="Self.FK__Wypozycze__ID_ro__02C769E9">
+            <End Role="Rowery" EntitySet="Rowery" />
+            <End Role="Wypozyczenia" EntitySet="Wypozyczenia" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Baza_Rower_MiejskiModelStoreContainer" CdmEntityContainer="Baza_Rower_MiejskiEntities">
+          <EntitySetMapping Name="Funkcje_Pracownikow">
+            <EntityTypeMapping TypeName="Baza_Rower_MiejskiModel.Funkcje_Pracownikow">
+              <MappingFragment StoreEntitySet="Funkcje_Pracownikow">
+                <ScalarProperty Name="ID_funkcji" ColumnName="ID_funkcji" />
+                <ScalarProperty Name="Nazwa_funkcji" ColumnName="Nazwa_funkcji" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Klienci">
+            <EntityTypeMapping TypeName="Baza_Rower_MiejskiModel.Klienci">
+              <MappingFragment StoreEntitySet="Klienci">
+                <ScalarProperty Name="ID_klienta" ColumnName="ID_klienta" />
+                <ScalarProperty Name="Imie" ColumnName="Imie" />
+                <ScalarProperty Name="Nazwisko" ColumnName="Nazwisko" />
+                <ScalarProperty Name="Plec" ColumnName="Plec" />
+                <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pracownicy">
+            <EntityTypeMapping TypeName="Baza_Rower_MiejskiModel.Pracownicy">
+              <MappingFragment StoreEntitySet="Pracownicy">
+                <ScalarProperty Name="ID_pracownika" ColumnName="ID_pracownika" />
+                <ScalarProperty Name="Imie" ColumnName="Imie" />
+                <ScalarProperty Name="Nazwisko" ColumnName="Nazwisko" />
+                <ScalarProperty Name="Pesel" ColumnName="Pesel" />
+                <ScalarProperty Name="Data_zatrudnienia" ColumnName="Data_zatrudnienia" />
+                <ScalarProperty Name="ID_funkcji_FK" ColumnName="ID_funkcji_FK" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rowery">
+            <EntityTypeMapping TypeName="Baza_Rower_MiejskiModel.Rowery">
+              <MappingFragment StoreEntitySet="Rowery">
+                <ScalarProperty Name="ID_roweru" ColumnName="ID_roweru" />
+                <ScalarProperty Name="Nr_ramy" ColumnName="Nr_ramy" />
+                <ScalarProperty Name="Data_wprowadzenia_roweru_do_uzytku" ColumnName="Data_wprowadzenia_roweru_do_uzytku" />
+                <ScalarProperty Name="ID_stanu_FK" ColumnName="ID_stanu_FK" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Serwis_roweru">
+            <EntityTypeMapping TypeName="Baza_Rower_MiejskiModel.Serwis_roweru">
+              <MappingFragment StoreEntitySet="Serwis_roweru">
+                <ScalarProperty Name="ID_serwisu" ColumnName="ID_serwisu" />
+                <ScalarProperty Name="ID_roweru_FK" ColumnName="ID_roweru_FK" />
+                <ScalarProperty Name="ID_pracownika_FK" ColumnName="ID_pracownika_FK" />
+                <ScalarProperty Name="Opis_usterki" ColumnName="Opis_usterki" />
+                <ScalarProperty Name="Kwota_naprawy" ColumnName="Kwota_naprawy" />
+                <ScalarProperty Name="Data_naprawy" ColumnName="Data_naprawy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stan_roweru">
+            <EntityTypeMapping TypeName="Baza_Rower_MiejskiModel.Stan_roweru">
+              <MappingFragment StoreEntitySet="Stan_roweru">
+                <ScalarProperty Name="ID_stanu" ColumnName="ID_stanu" />
+                <ScalarProperty Name="Nazwa_stanu" ColumnName="Nazwa_stanu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Wypozyczenia">
+            <EntityTypeMapping TypeName="Baza_Rower_MiejskiModel.Wypozyczenia">
+              <MappingFragment StoreEntitySet="Wypozyczenia">
+                <ScalarProperty Name="ID_wypozyczenia" ColumnName="ID_wypozyczenia" />
+                <ScalarProperty Name="ID_roweru_FK" ColumnName="ID_roweru_FK" />
+                <ScalarProperty Name="ID_klienta_FK" ColumnName="ID_klienta_FK" />
+                <ScalarProperty Name="ID_pracownika_FK" ColumnName="ID_pracownika_FK" />
+                <ScalarProperty Name="Data_czas_wypozyczenia" ColumnName="Data_czas_wypozyczenia" />
+                <ScalarProperty Name="Data_czas_oddania" ColumnName="Data_czas_oddania" />
+                <ScalarProperty Name="Czas_wypozyczenia" ColumnName="Czas_wypozyczenia" />
+                <ScalarProperty Name="Cena_wypozyczenia_za_godzine" ColumnName="Cena_wypozyczenia_za_godzine" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

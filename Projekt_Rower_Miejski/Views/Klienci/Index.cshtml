@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Projekt_Rower_Miejski.Klienci>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <h2>Lista klientów</h2>
+    @Html.ActionLink("Dodaj nowego klienta", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Imię
+        </th>
+        <th>
+            Naziwsko
+        </th>
+        <th>
+            Płeć
+        </th>
+        <th>
+            Telefon
+        </th>
+        <th>
+            E-mail
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Imie)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nazwisko)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Plec)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Telefon)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.ActionLink("Edytuj", "Edit", new { id=item.ID_klienta }) |
+            @Html.ActionLink("Informacje", "Details", new { id=item.ID_klienta }) |
+            @Html.ActionLink("Usuń", "Delete", new { id=item.ID_klienta })
+        </td>
+    </tr>
+}
+
+</table>

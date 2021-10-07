@@ -1,0 +1,34 @@
+﻿@model IEnumerable<Projekt_Rower_Miejski.Stan_roweru>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <h2>Lista stanów roweru</h2>
+    @Html.ActionLink("Dodaj nowy stan roweru", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Nazwa stanu
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nazwa_stanu)
+        </td>
+        <td>
+            @Html.ActionLink("Edytuj", "Edit", new { id=item.ID_stanu }) |
+            @Html.ActionLink("Informacje", "Details", new { id=item.ID_stanu }) |
+            @Html.ActionLink("Usuń", "Delete", new { id=item.ID_stanu })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,58 @@
+﻿@model Projekt_Rower_Miejski.Pracownicy
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Informacje o pracowniku</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Imię:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Imie)
+        </dd>
+
+        <dt>
+            Nazwisko:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nazwisko)
+        </dd>
+
+        <dt>
+            Pesel:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pesel)
+        </dd>
+
+        <dt>
+            Data zatrudnienia:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Data_zatrudnienia)
+        </dd>
+
+        <dt>
+            Funkcja pracownika:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Funkcje_Pracownikow.Nazwa_funkcji)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edytuj", "Edit", new { id = Model.ID_pracownika }) |
+    @Html.ActionLink("Wróć do listy", "Index")
+</p>

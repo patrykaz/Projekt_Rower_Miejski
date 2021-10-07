@@ -1,0 +1,63 @@
+﻿@model Projekt_Rower_Miejski.Pracownicy
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Czy na pewno chcesz usunąć klienta?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Imię:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Imie)
+        </dd>
+
+        <dt>
+            Nazwisko:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nazwisko)
+        </dd>
+
+        <dt>
+            Pesel:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pesel)
+        </dd>
+
+        <dt>
+            Data zatrudnienia:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Data_zatrudnienia)
+        </dd>
+
+        <dt>
+            Funkcja pracownika:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Funkcje_Pracownikow.Nazwa_funkcji)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Usuń" class="btn btn-default" /> |
+            @Html.ActionLink("Wróć do listy", "Index")
+        </div>
+    }
+</div>

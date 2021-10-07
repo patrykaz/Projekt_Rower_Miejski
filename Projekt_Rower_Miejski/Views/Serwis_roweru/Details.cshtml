@@ -1,0 +1,58 @@
+﻿@model Projekt_Rower_Miejski.Serwis_roweru
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Informacje o serwisie roweru</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Opis usterki:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Opis_usterki)
+        </dd>
+
+        <dt>
+            Kwota naprawy:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Kwota_naprawy)
+        </dd>
+
+        <dt>
+            Data naprawy:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Data_naprawy)
+        </dd>
+
+        <dt>
+            Pracownik:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pracownicy.Imie)
+        </dd>
+
+        <dt>
+            Rower:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rowery.Nr_ramy)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edytuj", "Edit", new { id = Model.ID_serwisu }) |
+    @Html.ActionLink("Wróć do listy", "Index")
+</p>

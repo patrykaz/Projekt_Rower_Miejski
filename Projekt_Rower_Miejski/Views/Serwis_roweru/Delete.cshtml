@@ -1,0 +1,63 @@
+﻿@model Projekt_Rower_Miejski.Serwis_roweru
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Czy na pewno chcesz usunąć klienta?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Opis usterki:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Opis_usterki)
+        </dd>
+
+        <dt>
+            Kwota naprawy:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Kwota_naprawy)
+        </dd>
+
+        <dt>
+            Data naprawy:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Data_naprawy)
+        </dd>
+
+        <dt>
+            Pracownik:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pracownicy.Imie)
+        </dd>
+
+        <dt>
+            Rower:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rowery.Nr_ramy)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Usuń" class="btn btn-default" /> |
+            @Html.ActionLink("Wróć do listy", "Index")
+        </div>
+    }
+</div>

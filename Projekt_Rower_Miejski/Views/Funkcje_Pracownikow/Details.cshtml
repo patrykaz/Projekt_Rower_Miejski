@@ -1,0 +1,26 @@
+﻿@model Projekt_Rower_Miejski.Funkcje_Pracownikow
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Informacje o funkcji pracowników</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Nazwa funkcji:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nazwa_funkcji)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edytuj", "Edit", new { id = Model.ID_funkcji }) |
+    @Html.ActionLink("Wróć do listy", "Index")
+</p>

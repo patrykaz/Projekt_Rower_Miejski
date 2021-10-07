@@ -1,0 +1,26 @@
+﻿@model Projekt_Rower_Miejski.Stan_roweru
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Informacje o stanie roweru</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Nazwa stanu:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nazwa_stanu)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edytuj", "Edit", new { id = Model.ID_stanu }) |
+    @Html.ActionLink("Wróć do listy", "Index")
+</p>

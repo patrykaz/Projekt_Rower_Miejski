@@ -1,0 +1,47 @@
+﻿@model Projekt_Rower_Miejski.Rowery
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Czy na pewno chcesz usunąć klienta?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Nr ramy:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nr_ramy)
+        </dd>
+
+        <dt>
+            Data wprowadzenia roweru:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Data_wprowadzenia_roweru_do_uzytku)
+        </dd>
+
+        <dt>
+            Stan roweu:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Stan_roweru.Nazwa_stanu)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Usuń" class="btn btn-default" /> |
+            @Html.ActionLink("Wróć do listy", "Index")
+        </div>
+    }
+</div>

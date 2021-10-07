@@ -1,0 +1,58 @@
+﻿@model Projekt_Rower_Miejski.Klienci
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Informacje o kliencie</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Imię:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Imie)
+        </dd>
+
+        <dt>
+            Nazwisko:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nazwisko)
+        </dd>
+
+        <dt>
+            Płeć:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Plec)
+        </dd>
+
+        <dt>
+            Telefon:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Telefon)
+        </dd>
+
+        <dt>
+            E-mail:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edytuj", "Edit", new { id = Model.ID_klienta }) |
+    @Html.ActionLink("Wróć do listy", "Index")
+</p>

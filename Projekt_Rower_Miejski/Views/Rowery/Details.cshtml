@@ -1,0 +1,42 @@
+﻿@model Projekt_Rower_Miejski.Rowery
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Informacje o rowerze</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Nr ramy:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nr_ramy)
+        </dd>
+
+        <dt>
+            Data wprowadzenia roweru:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Data_wprowadzenia_roweru_do_uzytku)
+        </dd>
+
+        <dt>
+            Stan roweru:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Stan_roweru.Nazwa_stanu)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edytuj", "Edit", new { id = Model.ID_roweru }) |
+    @Html.ActionLink("Wróć do listy", "Index")
+</p>
